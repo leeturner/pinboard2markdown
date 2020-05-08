@@ -1,0 +1,61 @@
+{
+    "date": "2020-05-06T20:58:54Z",
+    "user": "leeturner",
+    "posts": [
+        {
+            "href": "https:\/\/snyk.io\/wp-content\/uploads\/Snyk-Secure-Code-Review-Cheat-Sheet.pdf",
+            "description": "Print - Snyk-Secure-Code-Review-Cheat-Sheet.pdf",
+            "extended": "8 security code review best practices",
+            "meta": "928ba95506f02b157d227179efacf2a1",
+            "hash": "166006c919e7585bd78a7f777f964bc6",
+            "time": "2020-05-03T17:29:56Z",
+            "shared": "no",
+            "toread": "no",
+            "tags": "code reviews security newsletter"
+        },
+        {
+            "href": "https:\/\/springone.io\/",
+            "description": "SpringOne | Week of September 1, 2020",
+            "extended": "SpringOne is going virtual\r\n\r\nThe same cloud native conference you know and love, in an all-virtual format. See your old pals and make new ones. Watch hundreds of breakout sessions. And catch your favorite speakers, all from the comfort of your living room or repurposed kitchen nook (and likely theirs).\r\n\r\nIt\u2019s all online. It\u2019s all free. It\u2019s all (still) happening.",
+            "meta": "f9b447e086b923232fea360af7cb4268",
+            "hash": "34fcd38d83d4921c3b9a4cd6ee8e8f59",
+            "time": "2020-05-03T17:28:48Z",
+            "shared": "no",
+            "toread": "no",
+            "tags": "blogit newsletter spring springone"
+        },
+        {
+            "href": "https:\/\/www.youtube.com\/watch?v=TBDG_34yKys",
+            "description": "\"Shape Of You\" live coded in Kotlin - YouTube",
+            "extended": "\"Shape Of You\" live coded in Kotlin",
+            "meta": "f2145b7b0ad05fb154ac08fadbdf716b",
+            "hash": "af25f83a858757cb39080f5ad01cdd47",
+            "time": "2020-05-03T17:27:23Z",
+            "shared": "no",
+            "toread": "no",
+            "tags": "kotlin video music newsletter"
+        },
+        {
+            "href": "https:\/\/github.com\/pjagielski\/punkt",
+            "description": "pjagielski\/punkt: Live coding music library\/environment for Kotlin",
+            "extended": "Live coding music library\/environment for Kotlin ",
+            "meta": "d66e7958a614f434f180c8d5c37e6af7",
+            "hash": "5cdc0c19483a664ca2ee4331c2852e59",
+            "time": "2020-05-03T17:26:50Z",
+            "shared": "no",
+            "toread": "no",
+            "tags": "kotlin music newsletter"
+        },
+        {
+            "href": "https:\/\/kube.academy\/courses",
+            "description": "Courses - KubeAcademy",
+            "extended": "KubeAcademy courses are composed of a series of bite-size video lessons developed by expert instructors.",
+            "meta": "f2af4e4bf9e3cbf4e32bd5abb3c12880",
+            "hash": "26daa96bc30e9042844b49c490a380fc",
+            "time": "2020-05-03T17:26:00Z",
+            "shared": "no",
+            "toread": "no",
+            "tags": "blogit newsletter"
+        }
+    ]
+}
