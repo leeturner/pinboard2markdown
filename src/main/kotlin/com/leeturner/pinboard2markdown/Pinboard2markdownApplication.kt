@@ -4,7 +4,9 @@ import com.leeturner.pinboard2markdown.service.PinboardService
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.retry.annotation.EnableRetry
 
+@EnableRetry
 @SpringBootApplication
 class Pinboard2markdownApplication(val pinboardService: PinboardService) : CommandLineRunner {
     override fun run(vararg args: String?) {
