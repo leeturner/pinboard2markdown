@@ -14,7 +14,7 @@ data class Post(
 
     fun getTagsAsList(): List<String> {
         if (this.tags.isBlank()) {
-            return listOf()
+            return emptyList()
         }
         return this.tags.split(" ")
     }
