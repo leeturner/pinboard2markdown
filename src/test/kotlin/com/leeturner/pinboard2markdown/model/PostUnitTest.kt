@@ -5,6 +5,7 @@ import strikt.api.expectThat
 import strikt.assertions.containsExactly
 import strikt.assertions.containsExactlyInAnyOrder
 import strikt.assertions.hasSize
+import strikt.assertions.isEmpty
 
 internal class PostUnitTest {
 
@@ -28,20 +29,20 @@ internal class PostUnitTest {
     fun `getTagsAsList returns the correct tags with no tags`() {
         val post = this.getPost("")
 
-        expectThat(post.getTagsAsList()).hasSize(0)
+        expectThat(post.getTagsAsList()).isEmpty()
     }
 
     @Test
     fun `getTagsAsList returns the correct tags with an empty string`() {
         val post = this.getPost("     ")
 
-        expectThat(post.getTagsAsList()).hasSize(0)
+        expectThat(post.getTagsAsList()).isEmpty()
     }
 
     private fun getPost(tags: String): Post {
         return Post(href = "http://leeturner.me",
                 description = "Lee's website",
-                extended = "",
+                extended = "This is a longer description of the post",
                 meta = "meta",
                 hash = "hash",
                 time = "time",
