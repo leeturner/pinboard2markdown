@@ -44,11 +44,11 @@ class PinboardService(
 
     private fun logAndReturnEmptyPosts(tag: String): List<Post> {
         LOG.info("No posts returned with the tag - {}", tag)
-        return listOf()
+        return emptyList()
     }
 
     private fun logExceptionAndReturnEmptyPosts(exception: Exception): List<Post> {
         LOG.error("Can't access the Pinboard.in api.  Reason - {}", exception.message)
-        return listOf()
+        return emptyList()
     }
 }
