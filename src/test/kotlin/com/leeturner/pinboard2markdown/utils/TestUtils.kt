@@ -19,4 +19,19 @@ object TestUtils {
             "ai machine-learning deeplearning4j $NEWSLETTER_TAG")
         return PinboardResponse("2020-05-06T20:58:54Z", "username", listOf(post1))
     }
+
+    fun createPost(desc: String = "Strikt",
+                        href: String = "https://strikt.io/",
+                        extended: String = "Strikt is an assertion library for Kotlin intended for use with a test runner such as JUnit or Spek.",
+                        tags: String = NEWSLETTER_TAG): Post {
+        return Post(href = href,
+            description = desc,
+            extended = extended,
+            meta = "meta",
+            hash = "hash",
+            time = "time",
+            shared = "no",
+            toread = "no",
+            tags = tags)
+    }
 }
