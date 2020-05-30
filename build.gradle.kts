@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.2.7.RELEASE"
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
+    id("info.solidsoft.pitest") version "1.5.1"
     kotlin("jvm") version "1.3.72"
     kotlin("plugin.spring") version "1.3.72"
 }
@@ -16,6 +17,13 @@ configurations {
     runtimeClasspath {
         extendsFrom(developmentOnly)
     }
+}
+
+pitest {
+    threads.set(4)
+    //adds dependency to org.pitest:pitest-junit5-plugin and sets "testPlugin" to "junit5"
+    junit5PluginVersion.set("0.12")
+    avoidCallsTo.add("kotlin.jvm.internal")
 }
 
 repositories {
