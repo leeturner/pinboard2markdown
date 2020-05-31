@@ -22,8 +22,8 @@ internal class PinboardServiceUnitTest {
     private val pinboardService = PinboardService(REST_ENDPOINT, this.mockRestTemplate)
 
     @Test
-    fun `getPostsByTag returns the correct PinboardResponse when response status is OK`() {
-        val pinboardResponse = TestUtils.createPinboardResponse()
+    internal fun `getPostsByTag returns the correct PinboardResponse when response status is OK`() {
+        val pinboardResponse = TestUtils.createPinboardResponse("2020-05-06T20:58:54Z", "username", listOf(TestUtils.createPost()))
         val responseEntity = ResponseEntity.ok(pinboardResponse)
         whenever(this.mockRestTemplate.getForEntity(anyString(), eq(PinboardResponse::class.java))).thenReturn(responseEntity)
 
@@ -38,7 +38,7 @@ internal class PinboardServiceUnitTest {
     }
 
     @Test
-    fun `getPostsByTag returns an empty PinboardResponse when response status is not OK`() {
+    internal fun `getPostsByTag returns an empty PinboardResponse when response status is not OK`() {
         val pinboardResponse = TestUtils.createPinboardResponse()
         val responseEntity = ResponseEntity<PinboardResponse>(pinboardResponse, HttpStatus.UNAUTHORIZED)
         whenever(this.mockRestTemplate.getForEntity(anyString(), eq(PinboardResponse::class.java))).thenReturn(responseEntity)
@@ -53,7 +53,7 @@ internal class PinboardServiceUnitTest {
     }
 
     @Test
-    fun `getPostsByTag returns an empty PinboardResponse when the responseEntity body is null but the response status is OK`() {
+    internal fun `getPostsByTag returns an empty PinboardResponse when the responseEntity body is null but the response status is OK`() {
         val responseEntity = ResponseEntity<PinboardResponse>(null, HttpStatus.OK)
         whenever(this.mockRestTemplate.getForEntity(anyString(), eq(PinboardResponse::class.java))).thenReturn(responseEntity)
 
@@ -67,7 +67,7 @@ internal class PinboardServiceUnitTest {
     }
 
     @Test
-    fun `getPostsByTag returns an empty PinboardResponse when an HttpClientErrorException is thrown`() {
+    internal fun `getPostsByTag returns an empty PinboardResponse when an HttpClientErrorException is thrown`() {
         whenever(this.mockRestTemplate.getForEntity(anyString(), eq(PinboardResponse::class.java))).thenThrow(HttpClientErrorException(HttpStatus.UNAUTHORIZED))
 
         val response = this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)
@@ -77,7 +77,7 @@ internal class PinboardServiceUnitTest {
     }
 
     @Test
-    fun `apiAccessRecovery returns an empty PinboardResponse`() {
+    internal fun `apiAccessRecovery returns an empty PinboardResponse`() {
         val response = this.pinboardService.apiAccessResourceAccessExceptionRecovery(ResourceAccessException("Error Accessing API"))
         expectThat(response.date).isBlank()
         expectThat(response.user).isBlank()

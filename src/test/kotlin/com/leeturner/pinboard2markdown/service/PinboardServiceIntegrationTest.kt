@@ -35,7 +35,7 @@ internal class PinboardServiceIntegrationTest {
     lateinit var apiRecentEndpoint: String
 
     @Test
-    fun `getPostByTag retries when a ResourceAccessException is thrown`() {
+    internal fun `getPostByTag retries when a ResourceAccessException is thrown`() {
         whenever(this.restTemplate.getForEntity(anyString(), eq(PinboardResponse::class.java))).thenThrow(ResourceAccessException("Error Accessing API"))
 
         val response = this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)

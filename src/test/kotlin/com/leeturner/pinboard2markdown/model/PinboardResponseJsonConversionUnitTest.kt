@@ -13,8 +13,8 @@ internal class PinboardResponseJsonConversionUnitTest {
     private val objectMapper: ObjectMapper = ObjectMapper().registerModule(KotlinModule())
 
     @Test
-    fun `a PinboardResponse converts with one post`() {
-        val inputStream = this.javaClass.getResourceAsStream("/pinboard-response-examples/one-post-response.json");
+    internal fun `a PinboardResponse converts with one post`() {
+        val inputStream = this.javaClass.getResourceAsStream("/pinboard-response-examples/one-post-response.json")
         val pinboardResponse = this.objectMapper.readValue(inputStream, PinboardResponse::class.java)
 
         expectThat(pinboardResponse.date).isEqualTo("2018-11-10T16:50:02Z")
@@ -34,8 +34,8 @@ internal class PinboardResponseJsonConversionUnitTest {
     }
 
     @Test
-    fun `a PinboardResponse converts with a post with the minimum of data`() {
-        val inputStream = this.javaClass.getResourceAsStream("/pinboard-response-examples/one-post-response-minimum-data.json");
+    internal fun `a PinboardResponse converts with a post with the minimum of data`() {
+        val inputStream = this.javaClass.getResourceAsStream("/pinboard-response-examples/one-post-response-minimum-data.json")
         val pinboardResponse = this.objectMapper.readValue(inputStream, PinboardResponse::class.java)
 
         expectThat(pinboardResponse.date).isEqualTo("2020-05-07T18:54:14Z")
@@ -55,8 +55,8 @@ internal class PinboardResponseJsonConversionUnitTest {
     }
 
     @Test
-    fun `a PinboardResponse converts with multiple posts`() {
-        val inputStream = this.javaClass.getResourceAsStream("/pinboard-response-examples/multiple-post-response.json");
+    internal fun `a PinboardResponse converts with multiple posts`() {
+        val inputStream = this.javaClass.getResourceAsStream("/pinboard-response-examples/multiple-post-response.json")
         val pinboardResponse = this.objectMapper.readValue(inputStream, PinboardResponse::class.java)
 
         expectThat(pinboardResponse.date).isEqualTo("2020-05-06T20:58:54Z")
