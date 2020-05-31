@@ -1,7 +1,6 @@
 package com.leeturner.pinboard2markdown.service
 
 import com.leeturner.pinboard2markdown.model.PinboardResponse
-import com.leeturner.pinboard2markdown.model.Post
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
@@ -20,35 +19,35 @@ class PinboardService(
     private val LOG = LoggerFactory.getLogger(PinboardService::class.java)
 
     @Retryable(value = [ResourceAccessException::class], maxAttempts = 2)
-    fun getPostsByTag(tag: String): List<Post> {
+    fun getPostsByTag(tag: String): PinboardResponse {
         return try {
             LOG.info("Communicating with the Pinboard.in API...")
             val responseEntity = this.restTemplate.getForEntity("${this.apiRecentEndpoint}&tag=$tag", PinboardResponse::class.java)
             when (responseEntity.statusCode) {
-                HttpStatus.OK -> responseEntity.body?.posts ?: logAndReturnEmptyPosts(tag)
-                else -> logAndReturnEmptyPosts(tag)
+                HttpStatus.OK -> responseEntity.body ?: logAndReturnEmptyResponse(tag)
+                else -> logAndReturnEmptyResponse(tag)
             }
         } catch (httpClientErrorException: HttpClientErrorException) {
             // this Exception gets thrown when the api returns a 401 Unauthorised exception.
             // this probably happens because the pinboad.in api token hasn't been set correctly.
             // we catch this exception here instead of retrying because a retry is unlikely to
             // help in an unauthorised situation.
-            logExceptionAndReturnEmptyPosts(httpClientErrorException)
+            logAndReturnEmptyResponse(httpClientErrorException)
         }
     }
 
     @Recover
-    fun apiAccessResourceAccessExceptionRecovery(resourceAccessException: ResourceAccessException): List<Post> {
-        return logExceptionAndReturnEmptyPosts(resourceAccessException)
+    fun apiAccessResourceAccessExceptionRecovery(resourceAccessException: ResourceAccessException): PinboardResponse {
+        return logAndReturnEmptyResponse(resourceAccessException)
     }
 
-    private fun logAndReturnEmptyPosts(tag: String): List<Post> {
+    private fun logAndReturnEmptyResponse(tag: String): PinboardResponse {
         LOG.info("No posts returned with the tag - {}", tag)
-        return emptyList()
+        return PinboardResponse("", "", listOf())
     }
 
-    private fun logExceptionAndReturnEmptyPosts(exception: Exception): List<Post> {
+    private fun logAndReturnEmptyResponse(exception: Exception): PinboardResponse {
         LOG.error("Can't access the Pinboard.in api.  Reason - {}", exception.message)
-        return emptyList()
+        return PinboardResponse("", "", listOf())
     }
 }

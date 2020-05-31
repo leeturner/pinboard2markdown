@@ -14,9 +14,7 @@ import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.ResourceAccessException
 import org.springframework.web.client.RestTemplate
 import strikt.api.expectThat
-import strikt.assertions.containsExactly
-import strikt.assertions.hasSize
-import strikt.assertions.isEmpty
+import strikt.assertions.*
 
 internal class PinboardServiceUnitTest {
 
@@ -24,52 +22,66 @@ internal class PinboardServiceUnitTest {
     private val pinboardService = PinboardService(REST_ENDPOINT, this.mockRestTemplate)
 
     @Test
-    fun `getPostsByTag returns the correct Posts when response status is OK`() {
+    fun `getPostsByTag returns the correct PinboardResponse when response status is OK`() {
         val pinboardResponse = TestUtils.createPinboardResponse()
         val responseEntity = ResponseEntity.ok(pinboardResponse)
         whenever(this.mockRestTemplate.getForEntity(anyString(), eq(PinboardResponse::class.java))).thenReturn(responseEntity)
 
-        val posts = this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)
+        val response = this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)
 
-        expectThat(posts).hasSize(1)
-        expectThat(posts).containsExactly(pinboardResponse.posts)
+        expectThat(response.user).isEqualTo(pinboardResponse.user)
+        expectThat(response.date).isEqualTo(pinboardResponse.date)
+        expectThat(response.posts).hasSize(1)
+        expectThat(response.posts).containsExactly(pinboardResponse.posts)
         // the correct tag should be added to the end of the url
         verify(this.mockRestTemplate).getForEntity("${REST_ENDPOINT}&tag=${TestUtils.NEWSLETTER_TAG}", PinboardResponse::class.java)
     }
 
     @Test
-    fun `getPostsByTag returns an empty list when response status is not OK`() {
+    fun `getPostsByTag returns an empty PinboardResponse when response status is not OK`() {
         val pinboardResponse = TestUtils.createPinboardResponse()
         val responseEntity = ResponseEntity<PinboardResponse>(pinboardResponse, HttpStatus.UNAUTHORIZED)
         whenever(this.mockRestTemplate.getForEntity(anyString(), eq(PinboardResponse::class.java))).thenReturn(responseEntity)
 
-        expectThat(this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)).isEmpty()
+        val response = this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)
+        expectThat(response.date).isBlank()
+        expectThat(response.user).isBlank()
+        expectThat(response.posts).isEmpty()
 
         // the correct tag should be added to the end of the url
         verify(this.mockRestTemplate).getForEntity("${REST_ENDPOINT}&tag=${TestUtils.NEWSLETTER_TAG}", PinboardResponse::class.java)
     }
 
     @Test
-    fun `getPostsByTag returns an empty list when the responseEntity body is null but the response status is OK`() {
+    fun `getPostsByTag returns an empty PinboardResponse when the responseEntity body is null but the response status is OK`() {
         val responseEntity = ResponseEntity<PinboardResponse>(null, HttpStatus.OK)
         whenever(this.mockRestTemplate.getForEntity(anyString(), eq(PinboardResponse::class.java))).thenReturn(responseEntity)
 
-        expectThat(this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)).isEmpty()
+        val response = this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)
+        expectThat(response.date).isBlank()
+        expectThat(response.user).isBlank()
+        expectThat(response.posts).isEmpty()
 
         // the correct tag should be added to the end of the url
         verify(this.mockRestTemplate).getForEntity("${REST_ENDPOINT}&tag=${TestUtils.NEWSLETTER_TAG}", PinboardResponse::class.java)
     }
 
     @Test
-    fun `getPostsByTag returns an empty list when an HttpClientErrorException is thrown`() {
+    fun `getPostsByTag returns an empty PinboardResponse when an HttpClientErrorException is thrown`() {
         whenever(this.mockRestTemplate.getForEntity(anyString(), eq(PinboardResponse::class.java))).thenThrow(HttpClientErrorException(HttpStatus.UNAUTHORIZED))
 
-        expectThat(this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)).isEmpty()
+        val response = this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)
+        expectThat(response.date).isBlank()
+        expectThat(response.user).isBlank()
+        expectThat(response.posts).isEmpty()
     }
 
     @Test
-    fun `apiAccessRecovery returns an empty list`() {
-        expectThat(this.pinboardService.apiAccessResourceAccessExceptionRecovery(ResourceAccessException("Error Accessing API"))).isEmpty()
+    fun `apiAccessRecovery returns an empty PinboardResponse`() {
+        val response = this.pinboardService.apiAccessResourceAccessExceptionRecovery(ResourceAccessException("Error Accessing API"))
+        expectThat(response.date).isBlank()
+        expectThat(response.user).isBlank()
+        expectThat(response.posts).isEmpty()
     }
 
     companion object {

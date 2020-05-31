@@ -20,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.web.client.ResourceAccessException
 import org.springframework.web.client.RestTemplate
 import strikt.api.expectThat
+import strikt.assertions.isBlank
 import strikt.assertions.isEmpty
 
 @ExtendWith(SpringExtension::class)
@@ -37,7 +38,10 @@ internal class PinboardServiceIntegrationTest {
     fun `getPostByTag retries when a ResourceAccessException is thrown`() {
         whenever(this.restTemplate.getForEntity(anyString(), eq(PinboardResponse::class.java))).thenThrow(ResourceAccessException("Error Accessing API"))
 
-        expectThat(this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)).isEmpty()
+        val response = this.pinboardService.getPostsByTag(TestUtils.NEWSLETTER_TAG)
+        expectThat(response.date).isBlank()
+        expectThat(response.user).isBlank()
+        expectThat(response.posts).isEmpty()
         // restTemplate should be called twice due to exception that is thrown
         verify(this.restTemplate, times(2)).getForEntity("$apiRecentEndpoint&tag=${TestUtils.NEWSLETTER_TAG}", PinboardResponse::class.java)
     }
