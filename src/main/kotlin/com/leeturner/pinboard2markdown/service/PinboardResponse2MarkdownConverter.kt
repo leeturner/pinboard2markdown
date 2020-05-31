@@ -8,7 +8,15 @@ import org.springframework.stereotype.Component
 class PinboardResponse2MarkdownConverter {
 
     fun convertPinboardResponse(pinboardResponse: PinboardResponse): String {
-        return ""
+        return when {
+            pinboardResponse.date.isBlank() && pinboardResponse.user.isBlank() -> ""
+            else -> {
+                val title = "# ${pinboardResponse.date} - ${pinboardResponse.user}"
+                val posts = StringBuilder()
+                pinboardResponse.posts.forEach { posts.append("\n\n${this.convertPost(it)}") }
+                title + posts
+            }
+        }
     }
 
     fun convertPost(post: Post): String {
@@ -22,7 +30,7 @@ class PinboardResponse2MarkdownConverter {
                 }
                 val extended = when {
                     post.extended.isBlank() -> ""
-                    else -> "\n\n${post.extended}"
+                    else -> "\n${post.extended}"
                 }
                 title + extended
             }
