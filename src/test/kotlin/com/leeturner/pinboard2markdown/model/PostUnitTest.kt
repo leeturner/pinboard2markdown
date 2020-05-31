@@ -10,7 +10,7 @@ import strikt.assertions.isEmpty
 internal class PostUnitTest {
 
     @Test
-    fun `getTagsAsList returns the correct tags with one tag`() {
+    internal fun `getTagsAsList returns the correct tags with one tag`() {
         val post = this.getPost("tag")
 
         expectThat(post.getTagsAsList()).hasSize(1)
@@ -18,7 +18,7 @@ internal class PostUnitTest {
     }
 
     @Test
-    fun `getTagsAsList returns the correct tags with multiple tags`() {
+    internal fun `getTagsAsList returns the correct tags with multiple tags`() {
         val post = this.getPost("tag1 tag2 tag3")
 
         expectThat(post.getTagsAsList()).hasSize(3)
@@ -26,14 +26,14 @@ internal class PostUnitTest {
     }
 
     @Test
-    fun `getTagsAsList returns the correct tags with no tags`() {
+    internal fun `getTagsAsList returns the correct tags with no tags`() {
         val post = this.getPost("")
 
         expectThat(post.getTagsAsList()).isEmpty()
     }
 
     @Test
-    fun `getTagsAsList returns the correct tags with an empty string`() {
+    internal fun `getTagsAsList returns the correct tags with an empty string`() {
         val post = this.getPost("     ")
 
         expectThat(post.getTagsAsList()).isEmpty()
