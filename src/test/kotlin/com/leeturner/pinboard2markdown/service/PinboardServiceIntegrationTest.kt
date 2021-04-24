@@ -12,7 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.ArgumentMatchers.anyString
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
+import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 import org.springframework.test.context.ContextConfiguration
@@ -24,7 +24,7 @@ import strikt.assertions.isBlank
 import strikt.assertions.isEmpty
 
 @ExtendWith(SpringExtension::class)
-@ContextConfiguration(classes = [Pinboard2markdownApplication::class, PropertySourcesPlaceholderConfigurer::class], initializers = [ConfigFileApplicationContextInitializer::class])
+@ContextConfiguration(classes = [Pinboard2markdownApplication::class, PropertySourcesPlaceholderConfigurer::class], initializers = [ConfigDataApplicationContextInitializer::class])
 internal class PinboardServiceIntegrationTest {
 
     @MockBean
