@@ -1,7 +1,7 @@
 package com.leeturner.pinboard2markdown.model
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.hasSize
@@ -10,7 +10,7 @@ import strikt.assertions.isNullOrEmpty
 
 internal class PinboardResponseJsonConversionUnitTest {
 
-    private val objectMapper: ObjectMapper = ObjectMapper().registerModule(KotlinModule())
+    private val objectMapper: ObjectMapper = ObjectMapper().registerKotlinModule()
 
     @Test
     internal fun `a PinboardResponse converts with one post`() {
